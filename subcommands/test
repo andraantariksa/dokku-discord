@@ -54,11 +54,11 @@ discord_test_cmd() {
     HOSTNAME=$(hostname)
   fi
 
-  # Build the test message
-  local MESSAGE="This is a test notification from Dokku Discord plugin"$'\n'"Hostname: $HOSTNAME"
+  # Build the test message with escaped newlines for JSON
+  local MESSAGE="This is a test notification from Dokku Discord plugin\\nHostname: $HOSTNAME"
 
   if [[ -n "$APP" ]]; then
-    MESSAGE="$MESSAGE"$'\n'"Test triggered for app: $APP"
+    MESSAGE="$MESSAGE\\nTest triggered for app: $APP"
   fi
 
   # Build the JSON payload

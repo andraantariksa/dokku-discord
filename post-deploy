@@ -51,11 +51,11 @@ trigger_discord_post_deploy() {
     COMMIT_AUTHOR=$(cat "$DOKKU_ROOT/$APP/.commit_author")
   fi
 
-  # Build the message
-  local MESSAGE="Application: $APP"$'\n'"Hostname: $HOSTNAME"$'\n'"URL: $APP_URL"
+  # Build the message with escaped newlines for JSON
+  local MESSAGE="Application: $APP\\nHostname: $HOSTNAME\\nURL: $APP_URL"
 
   if [[ -n "$COMMIT_AUTHOR" ]]; then
-    MESSAGE="$COMMIT_AUTHOR"$'\n'"$MESSAGE"
+    MESSAGE="$COMMIT_AUTHOR\\n$MESSAGE"
   fi
 
   # Build the JSON payload
