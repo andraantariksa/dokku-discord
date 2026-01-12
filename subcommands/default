@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ $DOKKU_TRACE ]] && set -x
+source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
+
+discord_default_cmd() {
+  local cmd="discord"
+
+  cat<<EOF
+Usage: dokku discord[:COMMAND] [<app>]
+
+Manage Discord webhook notifications for Dokku deployments
+
+Commands:
+    discord:set <webhook-url> [<app>]    Set Discord webhook URL (globally or for an app)
+    discord:get [<app>]                  Get Discord webhook URL
+    discord:clear [<app>]                Clear Discord webhook URL
+
+Examples:
+    dokku discord:set https://discord.com/api/webhooks/... myapp
+    dokku discord:set https://discord.com/api/webhooks/...
+    dokku discord:get myapp
+    dokku discord:clear myapp
+EOF
+}
+
+discord_default_cmd "$@"
