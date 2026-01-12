@@ -15,12 +15,15 @@ Commands:
     discord:set <webhook-url> [<app>]    Set Discord webhook URL (globally or for an app)
     discord:get [<app>]                  Get Discord webhook URL
     discord:clear [<app>]                Clear Discord webhook URL
+    discord:test [<app>]                 Test Discord webhook by sending a test notification
 
 Examples:
     dokku discord:set https://discord.com/api/webhooks/... myapp
     dokku discord:set https://discord.com/api/webhooks/...
     dokku discord:get myapp
     dokku discord:clear myapp
+    dokku discord:test myapp
+    dokku discord:test
 EOF
 }
 

@@ -67,6 +67,20 @@ dokku discord:clear
 dokku discord:clear myapp
 ```
 
+### Test webhook
+
+Test your webhook configuration by sending a test notification:
+
+```bash
+# Test global webhook
+dokku discord:test
+
+# Test app-specific webhook
+dokku discord:test myapp
+```
+
+This will send a test notification to your Discord channel to verify the webhook is configured correctly.
+
 ## How It Works
 
 When you deploy an application, the plugin automatically sends a notification to your Discord channel with:
