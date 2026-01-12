@@ -3,9 +3,9 @@ set -eo pipefail
 [[ $DOKKU_TRACE ]] && set -x
 source "$PLUGIN_CORE_AVAILABLE_PATH/common/functions"
 
-trigger_discord_post_deploy() {
-  declare desc="Send Discord notification after deployment"
-  declare trigger="post-deploy"
+trigger_discord_pre_deploy() {
+  declare desc="Send Discord notification before deployment"
+  declare trigger="pre-deploy"
   declare APP="$1"
   local DOKKU_ROOT="${DOKKU_ROOT:-/home/dokku}"
 
@@ -52,20 +52,20 @@ trigger_discord_post_deploy() {
   fi
 
   # Build the message with escaped newlines for JSON
-  local MESSAGE="✅ Deployment success\\nApplication: $APP\\nHostname: $HOSTNAME\\nURL: $APP_URL"
+  local MESSAGE="🚀 Deployment starting...\\nApplication: $APP\\nHostname: $HOSTNAME\\nURL: $APP_URL"
 
   if [[ -n "$COMMIT_AUTHOR" ]]; then
     MESSAGE="$COMMIT_AUTHOR\\n$MESSAGE"
   fi
 
-  # Build the JSON payload
+  # Build the JSON payload (using yellow/amber color for in-progress)
   local TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%S.000Z")
   local JSON_PAYLOAD=$(cat <<EOF
 {
   "embeds": [
     {
       "description": "$MESSAGE",
-      "color": 2407256,
+      "color": 16776960,
       "timestamp": "$TIMESTAMP"
     }
   ]
@@ -81,10 +81,10 @@ EOF
     "$WEBHOOK_URL" 2>/dev/null || echo "000")
 
   if [[ "$HTTP_STATUS" =~ ^2[0-9][0-9]$ ]]; then
-    dokku_log_info1 "Discord notification sent successfully (HTTP $HTTP_STATUS)"
+    dokku_log_info1 "Discord pre-deploy notification sent successfully (HTTP $HTTP_STATUS)"
   else
-    dokku_log_warn "Discord notification failed (HTTP $HTTP_STATUS)"
+    dokku_log_warn "Discord pre-deploy notification failed (HTTP $HTTP_STATUS)"
   fi
 }
 
-trigger_discord_post_deploy "$@"
+trigger_discord_pre_deploy "$@"

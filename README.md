@@ -83,7 +83,12 @@ This will send a test notification to your Discord channel to verify the webhook
 
 ## How It Works
 
-When you deploy an application, the plugin automatically sends a notification to your Discord channel with:
+When you deploy an application, the plugin automatically sends two notifications to your Discord channel:
+
+1. **Pre-deploy notification** (yellow/amber color) - Sent when deployment starts
+2. **Post-deploy notification** (green color) - Sent when deployment completes
+
+Each notification includes:
 
 - 📱 Application name
 - 🌐 Hostname
@@ -91,7 +96,17 @@ When you deploy an application, the plugin automatically sends a notification to
 - 👤 Commit author (if available)
 - ⏰ Timestamp
 
-Example notification:
+Example pre-deploy notification:
+
+```
+John Doe <john@example.com>
+🚀 Deployment starting...
+Application: myapp
+Hostname: example.com
+URL: http://myapp.example.com
+```
+
+Example post-deploy notification:
 
 ```
 John Doe <john@example.com>
